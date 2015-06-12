@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+	<!-- appender 部分是可用的日志输出方式定义，可以定义多个 -->
+    <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">   
+        <layout class="org.apache.log4j.PatternLayout">   
+            <param name="ConversionPattern" value="%-5p %d{ISO8601} %l %x: %m%n"/>   
+        </layout>   
+    </appender>   
+
+    <appender name="app_log" class="org.apache.log4j.DailyRollingFileAppender">   
+		<param name="File" value="${catalina.base}/webapps/logs/log4j/app/app_log.log"/> <!-- 设置File参数：日志输出文件名 -->
+		<param name="Append" value="true"/>   <!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志   --> 
+		<!--   设置文件大小 
+		<param name="MaxFileSize" value="10000KB"/>   
+		<param name="MaxBackupIndex" value="50"/>   
+		--> 
+		<layout class="org.apache.log4j.PatternLayout">   <!-- 设置输出文件项目和格式 --> 
+			<param name="ConversionPattern" value="%-5p %d{ISO8601} %t %l %x: %m%n"/>   
+		</layout>   
+    </appender>   
+    <appender name="web_log" class="org.apache.log4j.DailyRollingFileAppender">   
+		<param name="File" value="${catalina.base}/webapps/logs/log4j/web/web_log.log"/> <!-- 设置File参数：日志输出文件名 -->
+		<param name="Append" value="true"/>   <!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志   --> 
+		<layout class="org.apache.log4j.PatternLayout">   <!-- 设置输出文件项目和格式 --> 
+			<param name="ConversionPattern" value="%-5p %d{ISO8601} %t %l %x: %m%n"/>   
+		</layout>   
+    </appender>   
+    <appender name="dao_log" class="org.apache.log4j.DailyRollingFileAppender">   
+		<param name="File" value="${catalina.base}/webapps/logs/log4j/common/dao_log.log"/> <!-- 设置File参数：日志输出文件名 -->
+		<param name="Append" value="true"/>   <!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志   --> 
+		<layout class="org.apache.log4j.PatternLayout">   <!-- 设置输出文件项目和格式 --> 
+			<param name="ConversionPattern" value="%-5p %d{ISO8601} %t %l %x: %m%n"/>   
+		</layout>   
+    </appender> 
+    <appender name="iface_log" class="org.apache.log4j.DailyRollingFileAppender">   
+		<param name="File" value="${catalina.base}/webapps/logs/log4j/common/iface_log.log"/> <!-- 设置File参数：日志输出文件名 -->
+		<param name="Append" value="true"/>   <!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志   --> 
+		<layout class="org.apache.log4j.PatternLayout">   <!-- 设置输出文件项目和格式 --> 
+			<param name="ConversionPattern" value="%-5p %d{ISO8601} %t %l %x: %m%n"/>   
+		</layout>   
+    </appender>           
+    <appender name="common_log" class="org.apache.log4j.DailyRollingFileAppender">   
+		<param name="File" value="${catalina.base}/webapps/logs/log4j/common/common_log.log"/> <!-- 设置File参数：日志输出文件名 -->
+		<param name="Append" value="true"/>   <!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志   --> 
+		<layout class="org.apache.log4j.PatternLayout">   <!-- 设置输出文件项目和格式 --> 
+			<param name="ConversionPattern" value="%-5p %d{ISO8601} %t %l %x: %m%n"/>   
+		</layout>   
+    </appender>  
+    <appender name="service_log" class="org.apache.log4j.DailyRollingFileAppender">   
+		<param name="File" value="${catalina.base}/webapps/logs/log4j/common/service_log.log"/> <!-- 设置File参数：日志输出文件名 -->
+		<param name="Append" value="true"/>   <!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志   --> 
+		<layout class="org.apache.log4j.PatternLayout">   <!-- 设置输出文件项目和格式 --> 
+			<param name="ConversionPattern" value="%-5p %d{ISO8601} %t %l %x: %m%n"/>   
+		</layout>   
+    </appender>      
+
+    <appender name="interf_log" class="org.apache.log4j.DailyRollingFileAppender">   
+		<param name="File" value="${catalina.base}/webapps/ROOT/logs/log4j/interf/interf_log.log"/> <!-- 设置File参数：日志输出文件名 -->
+		<param name="Append" value="true"/>   <!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志   --> 
+		<layout class="org.apache.log4j.PatternLayout">   <!-- 设置输出文件项目和格式 --> 
+			<param name="ConversionPattern" value="%-5p %d{ISO8601} %t %l %x: %m%n"/>   
+		</layout>   
+    </appender> 
+    
+	<!-- logger 部分 分包名设置日志级别及输出通道 -->
+	<logger name="com.storycard.controller"> <!--   设置域名限制，即com.uskytec.lbp.app域及以下的日志均输出到下面对应的通道中   --> 
+		<level value="INFO" />					<!--   设置级别   -->  
+		<appender-ref ref="web_log" />			<!--   与前面的通道id相对应   -->   
+	</logger>
+	<logger name="com.storycard.dao">
+		<level value="INFO" />					
+		<appender-ref ref="dao_log" />		
+	</logger>
+	
+	<logger name="com.storycard.service">
+		<level value="INFO" />					
+		<appender-ref ref="service_log" />		
+	</logger>
+	
+	<logger name="com.storycard.iface">
+		<level value="INFO" />					
+		<appender-ref ref="iface_log" />		
+	</logger>
+	
+	<!-- 对外接口日志: MAS3.0 ADC -->
+	<logger name="com.uskytec.lbp.ext.interf">
+		<level value="DEBUG" />					
+		<appender-ref ref="interf_log" />		
+	</logger>	
+		
+	<logger name="com.sshjava">
+		<level value="ERROR" />
+	</logger>
+	
+	<logger name="org.springframework">
+		<level value="INFO" />
+	</logger>
+	<logger name="org.hibernate.type">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.hibernate.cache">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.apache.struts2">
+		<level value="ERROR" />
+	</logger>
+	<logger name="com.opensymphony.xwork2">
+		<level value="ERROR" />
+	</logger>
+	<logger name="com.opensymphony.xwork2.ognl.OgnlValueStack">
+		<level value="ERROR" />
+	</logger>
+	<logger name="com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor">
+		<level value="WARN" />
+	</logger>
+	<logger name="org.hibernate">
+		<level value="ERROR" />					
+	</logger>
+	<logger name="com.uskytec.lbp.web.auto.template">
+		<level value="ERROR" />
+	</logger>
+
+	<!--  root部分定义了log4j的默认输出级别和方式 -->
+	<root>
+		<priority value="INFO"/>
+		<!-- 
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="app_log"/>
+		<appender-ref ref="web_log"/>
+		-->
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="web_log"/>
+		<appender-ref ref="iface_log"/>
+		<appender-ref ref="dao_log"/>
+		<appender-ref ref="service_log"/>
+		
+	</root>
+
+</log4j:configuration> 

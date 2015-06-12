@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"  
+	xmlns:context="http://www.springframework.org/schema/context"  
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- 处理投票 -->
+	<bean id="bidJob" class="com.amspro.task.BidTask">
+	</bean>
+	<bean id="bidjobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject">
+			<ref bean="bidJob"/>
+		</property>
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod">
+			<value>bid</value>
+		</property>
+		<property name="concurrent" value="false" />
+	</bean>
+<!-- 定义触发时间 -->
+        <bean id="bidTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+            <property name="jobDetail">
+                <ref bean="bidjobtask"/>
+            </property>
+            <!-- cron表达式 -->
+            <property name="cronExpression">
+                <value>0/30 * * * * ?</value>
+            </property>
+        </bean>
+<!-- 处理还款 -->
+    <bean id="rementJob" class="com.amspro.task.RementTask">
+    </bean>
+ 	<bean id="rementjobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject">
+        	<ref bean="rementJob"/>
+        </property>
+            <!-- 调用类中的方法 -->
+        <property name="targetMethod">
+            <value>rement</value>
+        </property>
+	</bean>
+<!-- 定义触发时间 -->
+        <bean id="rementTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+            <property name="jobDetail">
+                <ref bean="rementjobtask"/>
+            </property>
+            <!-- cron表达式 -->
+            <property name="cronExpression">
+                <value>0/300 * * * * ?</value>
+            </property>
+        </bean>
+<!-- 重新入对列 -->
+    <bean id="rePutQueueJob" class="com.amspro.task.RePutQueueTask">
+    </bean>
+ 	<bean id="rePutQueuetask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject">
+        	<ref bean="rePutQueueJob"/>
+        </property>
+            <!-- 调用类中的方法 -->
+        <property name="targetMethod">
+            <value>rePutQueue</value>
+        </property>
+	<!-- 定义触发时间 -->
+	<!-- 重新入对列 -->
+	</bean>
+<!-- 定义触发时间 -->
+        <bean id="rePutQueueTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+            <property name="jobDetail">
+                <ref bean="rePutQueuetask"/>
+            </property>
+            <!-- cron表达式 -->
+            <property name="cronExpression">
+                <value>0/35 * * * * ?</value>
+            </property>
+        </bean>
+	<!-- 定义触发时间 -->
+	<!-- 处理代扣交易轮询 -->
+	<bean id="cutPaymentQueryJob" class="com.amspro.task.CutPaymentAgentCircleQuery">
+	</bean>
+	<bean id="cutPaymentQueryjobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject">
+			<ref bean="cutPaymentQueryJob"/>
+		</property>
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod">
+			<value>process</value>
+		</property>
+		<property name="concurrent" value="false" />
+	</bean>
+	<!-- 定义触发时间 -->
+	<bean id="cutPaymentQueryTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="cutPaymentQueryjobtask"/>
+		</property>
+		<!-- cron表达式 -->
+		<property name="cronExpression">
+			<value>0 */1 * * * ?</value>
+		</property>
+	</bean>
+    <!-- 验卡通知轮询 -->
+	<bean id="pollnoticeJob" class="com.amspro.task.PollNoticeTask">
+	</bean>
+	<bean id="pollnoticejobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject">
+			<ref bean="pollnoticeJob"/>
+		</property>
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod">
+			<value>poll</value>
+		</property>
+		<property name="concurrent" value="false" />
+	</bean>
+	<!-- 定义触发时间 -->
+	<bean id="pollnoticeTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="pollnoticejobtask"/>
+		</property>
+		<!-- cron表达式 -->
+		<property name="cronExpression">
+			<value>0 */1 * * * ?</value>
+		</property>
+	</bean>    
+<!-- 处理提现银企直联交易轮询 -->
+	<bean id="cashTaskJob" class="com.amspro.task.CashTask">
+	</bean>
+	<bean id="cashTaskjobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject">
+			<ref bean="cashTaskJob"/>
+		</property>
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod">
+			<value>cash</value>
+		</property>
+		<property name="concurrent" value="false" />
+	</bean>
+	<!-- 定义触发时间 -->
+	<bean id="cashTaskTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="cashTaskjobtask"/>
+		</property>
+		<!-- cron表达式 -->
+		<property name="cronExpression">
+			<value>0 */1 * * * ?</value>
+		</property>
+	</bean>    
+	<!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序  -->
+	<bean id="startQuertz" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+<!-- 				                    <ref bean="bidTime"/> -->
+<!-- 				                    <ref bean="rementTime"/> -->
+				<!--                     <ref bean="rePutQueueTime"/> -->
+<!-- 				                    <ref bean="cutPaymentQueryTime"/> -->
+ 				                   <!--  <ref bean="pollnoticeTime"/> -->
+			</list>
+		</property>
+	</bean>
+</beans>

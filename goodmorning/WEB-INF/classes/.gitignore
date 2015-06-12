@@ -1,0 +1,11 @@
+/applicationContext.xml
+/com/
+/commons-logging.properties
+/dao.xml
+/jdbc.properties
+/log4j.xml
+/mongo.properties
+/mpkz.properties
+/service.xml
+/spring-mongo.xml
+/task.xml
