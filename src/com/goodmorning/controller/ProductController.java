@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.goodmorning.bean.Pagination;
 import com.goodmorning.bean.Product;
 import com.goodmorning.service.IProductService;
 import com.goodmorning.util.PubFun;
@@ -61,6 +62,23 @@ public class ProductController {
 		String productListJson="";
 		try {
 			Gson gson = new Gson();
+			Pagination<Product> pagination=new Pagination<Product>();
+			pagination=productService.findNewProducts(pagination);
+			productListJson=gson.toJson(pagination);
+			System.out.println(productListJson);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return productListJson;
+	}
+	
+	@RequestMapping(value="/product/findHotTop5",method=RequestMethod.GET)
+	@ResponseBody
+	public String findHotTop5(HttpServletRequest request, HttpServletResponse response){
+		String productListJson="";
+		try {
+			Gson gson = new Gson();
 			List<Product> products=productService.findHotTop5();
 			productListJson=gson.toJson(products);
 			System.out.println(productListJson);
@@ -70,5 +88,4 @@ public class ProductController {
 		
 		return productListJson;
 	}
-	
 }
