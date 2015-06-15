@@ -8,9 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
 
 
 public class PubFun {
@@ -256,6 +255,18 @@ public class PubFun {
 		}
 		return n;
 	}
+	
+	public static String getseqRandomNum(){
+		String num="";
+		try{
+		int random=(int)(Math.random()*1000000);
+		num=String.valueOf(random);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return num;
+	}
+	
 	public static void main(String[] arg) throws Exception{
 //		String msg = "<P2PREQ><RESPTIME>null</RESPTIME><SERIALNUM>YZFDS0000000000781</SERIALNUM><CARDNUM>6212260200018899902</CARDNUM><ACCOUNTNAME>杨宇轩</ACCOUNTNAME><PAYAMOUNT>20.00</PAYAMOUNT><RESULTCODE>06</RESULTCODE><RESULTDESC></RESULTDESC><EXTPARAMES><PARAMEKEY>null</PARAMEKEY><PARAMEVALUE>null</PARAMEVALUE></EXTPARAMES></P2PREQ>";
 //		Document doc = DocumentHelper.parseText(msg);
