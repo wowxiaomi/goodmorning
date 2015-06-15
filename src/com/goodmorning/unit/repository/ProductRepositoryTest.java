@@ -39,8 +39,6 @@ public class ProductRepositoryTest extends UnitTest{
 	
 	public static void queryProductTop5()throws Exception{
 		IProductRepository productRepository=(IProductRepository) getBean("productRepository");
-		Pagination pagination=new Pagination();
-		
 		List<Product> products=productRepository.findHotTop5();
 		for(Product product:products){
 			System.out.println(product.getmId());
