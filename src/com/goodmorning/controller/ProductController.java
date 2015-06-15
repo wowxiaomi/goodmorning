@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.goodmorning.bean.Product;
 import com.goodmorning.service.IProductService;
@@ -55,6 +56,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/product/queryProductlist",method=RequestMethod.GET)
+	@ResponseBody
 	public String queryProductlist(HttpServletRequest request, HttpServletResponse response){
 		String productListJson="";
 		try {
@@ -66,7 +68,7 @@ public class ProductController {
 			e.printStackTrace();
 		}
 		
-		return "/page/main";
+		return productListJson;
 	}
 	
 }
